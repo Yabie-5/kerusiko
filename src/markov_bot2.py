@@ -1,6 +1,11 @@
 import spacy
 import random
 import re
+import warnings
+from itertools import chain
+
+import analyzer
+
 
 class Markov:
     nlp = spacy.load("ja_ginza")
@@ -8,7 +13,7 @@ class Markov:
     def text_of_sequence_of_words(text):
         """ 形態素解析を行う """
 
-        doc = nlp(text)
+        doc = Markov.nlp(text)
         sequence = []
         for token in doc:
             sequence.append(token.text)
@@ -42,7 +47,7 @@ class Markov:
 
         return sequence_li, marcov_dict
 
-    def generate(sentence,markov, worldList):
+    def generate(sentence, markov, worldList):
         """ マルコフ辞書から文書を作り出す
         """
         p1, p2, p3 = random.choice(list(markov.keys()))
@@ -69,7 +74,7 @@ class Markov:
 
         return sentence
 
-    def make():
+    def make(self):
         sequence_li, marcov_dict = Markov.get_copath()
         sentence = ""
         sentence = Markov.generate(sentence=sentence, markov=marcov_dict, worldList=sequence_li)
@@ -77,36 +82,37 @@ class Markov:
         return sentence
     
 
-def overlap(sentence):
-    """ 重複した文章の除去 """
-
-    sentence = sentence.split('。')
-    if "" in sentence:
-        sentence.remove('')
-
-    new = []
-    for str in sentence:
-        str += "。"
-        if str == "。":
-            break
-        new.append(str)
-    new = set(new)
-
-    sentence = "".join(new)
-
-    return sentence
-
-
-
 
 
 if __name__=="__main__":
-    sequence_li, marcov_dict = get_copath()
-    sentence = ""
-    while(not sentence):
-        sentence = generate(sentence=sentence, markov=marcov_dict, worldList=sequence_li)
-        sentence = overlap(sentence=sentence)
+    markov = Markov()
+    print("++++++++++++++++++++++++")
+    print("++++++++++++++++++++++++")
+    print("Starting PRTS system ...")
+    text = markov.make()
+    sentences = text.split("。")
+    if "" in sentences:
+        sentences.remove("")
+    print("議論しようではないか。")
+    
 
-    print(sentence)
-    input("[Enter]キーで終了")
+    while True:
+        line = input(">")
+
+        parts = analyzer.analyzer(line)
+
+        m = []
+        for word, part in parts:
+
+            if analyzer.keyword_check(part):
+                
+                for element in sentences:
+                    find = ".*?" + word + ".*"
+                    tmp = re.findall(find, element)
+
+        m = list(chain.from_iterable(m))
+        if m:
+            print(random.choice(m))
+        else:
+            print(random.choice(sentences))
 
