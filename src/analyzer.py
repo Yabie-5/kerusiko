@@ -1,17 +1,20 @@
 import re
 import spacy
+import warnings
+
+warnings.simplefilter('ignore')
 
 class Analizer:
 
     nlp = spacy.load("ja_ginza")
 
-    def text_of_sequence_of_words(text):
+    def analyzer(text):
         """ 形態素解析を行う """
 
         doc = Analizer.nlp(text)
         sequence = []
         for token in doc:
-            sequence.append(token.text, token.pos_)
+            sequence.append([token.text, token.pos_])
 
         return sequence
 
