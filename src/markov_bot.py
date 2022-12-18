@@ -87,8 +87,8 @@ class Markov:
 if __name__=="__main__":
     markov = Markov()
     print("++++++++++++++++++++++++")
-    print("++++++++++++++++++++++++")
     print("Starting PRTS system ...")
+    print("++++++++++++++++++++++++")
     text = markov.make()
     sentences = text.split("。")
     if "" in sentences:
@@ -158,10 +158,6 @@ if __name__=="__main__":
                     if tmp:
                         ans.append(tmp)
                         sim = s_w
-        print(f"====================================")
-        print(f"類似している単語->{sim}")
-        print(f"その他の類似単語->{simi_words}")
-        print(f"====================================")
 
         ans = list(chain.from_iterable(ans))
         if ans:
@@ -170,6 +166,11 @@ if __name__=="__main__":
         else:
             print("↓↓↓生成された文↓↓↓")
             print(random.choice(sentences))
+
+        print(f"====================================")
+        print(f"類似している単語->{sim}")
+        print(f"その他の類似単語->{simi_words}")
+        print(f"====================================")
 
             
 
