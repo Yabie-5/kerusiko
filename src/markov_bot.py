@@ -93,13 +93,13 @@ if __name__=="__main__":
     sentences = text.split("。")
     if "" in sentences:
         sentences.remove("")
-    print("議論しようではないか。")
+    print("私に何か用事でもあるのか？")
     
     
     while True:
         line = input(">")
         if line == "":
-            print("\n...そろそろ時間だ。仕事に戻るとしよう")
+            print("\n...時間だ。仕事に戻るとしよう")
             break
         
         parts = analyzer.Analizer.analyzer(line)
@@ -165,8 +165,10 @@ if __name__=="__main__":
 
         ans = list(chain.from_iterable(ans))
         if ans:
+            print("↓↓↓生成された文↓↓↓")
             print(random.choice(ans))
         else:
+            print("↓↓↓生成された文↓↓↓")
             print(random.choice(sentences))
 
             
